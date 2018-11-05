@@ -1,12 +1,12 @@
 # react-boilerplate-starter
 
-A mildly opinionated bare bones react boilerplate for front end projects.
+A mildly opinionated bare-bones react boilerplate.
 
 ## Features
 
-- Babel: last 2 browsers
+- Babel: support for last 2 browsers
 - Parcel package bundler
-- ESlint: recommended rules, React, and a11y
+- ESlint: recommended rules, React, and a11y support
 - Prettier: no additional rules
 
 ## Installation
