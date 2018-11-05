@@ -25,9 +25,9 @@ A mildly opinionated bare-bones react boilerplate.
 
 1. Change upstream repo to your new project
 
-- Create new repo
-- Change master: `git remote add origin https://github.com/YOUR_NEW_REPO.git`
-- push code to new master: `git push -u origin master`
+   - Create new repository on Github, ..etc
+   - Change master: `git remote set-url origin https://github.com/YOUR_NEW_REPO.git`
+   - push code to new master: `git push -u origin master`
 
 ## Running Dev Server / Building
 
