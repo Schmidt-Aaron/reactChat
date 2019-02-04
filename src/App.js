@@ -74,7 +74,7 @@ class App extends React.Component {
       })
       .then(room => {
         this.setState({
-          roomId
+          roomId: room.id
         });
         this.getRooms();
       });
@@ -92,6 +92,7 @@ class App extends React.Component {
     return (
       <main className="app">
         <RoomList
+          roomId={this.state.roomId}
           rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}
           subscribe={this.subscribeToRoom}
         />

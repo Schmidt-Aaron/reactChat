@@ -66,9 +66,12 @@ body {
   font-size: 1.5rem;
 }
 
-.room a {
+a {
   text-decoration: none;
   color: var(--main-text-color);
+}
+.room-list .active a {
+  color: var(--white);
 }
 
 .message-list {
