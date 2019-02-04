@@ -11,7 +11,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      rooms: []
+      joinableRooms: [],
+      joinedRooms: []
     };
     this.sendMessage = this.sendMessage.bind(this);
   }
@@ -29,10 +30,16 @@ class App extends React.Component {
         console.log("Successful Connection", currentUser);
         this.currentUser = currentUser;
 
-        // populate current subscribed rooms
-        this.setState({
-          rooms: currentUser.rooms
-        });
+        // populate all rooms
+        this.currentUser
+          .getJoinableRooms()
+          .then(joinableRooms => {
+            this.setState({
+              joinableRooms,
+              joinedRooms: this.currentUser.rooms
+            });
+          })
+          .catch(err => `Error fetching rooms: ${err}`);
 
         // get messages
         this.currentUser.subscribeToRoom({
@@ -47,7 +54,6 @@ class App extends React.Component {
           messageLimit: 20
         });
       })
-
       .catch(err => {
         console.log("Error on connection", err);
       });
@@ -63,7 +69,9 @@ class App extends React.Component {
   render() {
     return (
       <main className="app">
-        <RoomList rooms={this.state.rooms} />
+        <RoomList
+          rooms={[...this.state.joinableRooms, ...this.state.joinedRooms]}
+        />
         <MessageList messages={this.state.messages} />
         <NewRoom />
         <SendMessage sendMessage={this.sendMessage} />
