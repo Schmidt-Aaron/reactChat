@@ -13,6 +13,7 @@ class App extends React.Component {
       messages: [],
       rooms: []
     };
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   componentDidMount() {
@@ -26,6 +27,7 @@ class App extends React.Component {
       .connect()
       .then(currentUser => {
         console.log("Successful Connection", currentUser);
+        this.currentUser = currentUser;
 
         // populate current subscribed rooms
         this.setState({
@@ -33,7 +35,7 @@ class App extends React.Component {
         });
 
         // get messages
-        currentUser.subscribeToRoom({
+        this.currentUser.subscribeToRoom({
           roomId: "19380169",
           hooks: {
             onMessage: message => {
@@ -51,13 +53,20 @@ class App extends React.Component {
       });
   }
 
+  sendMessage(text) {
+    this.currentUser.sendMessage({
+      text,
+      roomId: "19380169"
+    });
+  }
+
   render() {
     return (
       <main className="app">
         <RoomList rooms={this.state.rooms} />
         <MessageList messages={this.state.messages} />
         <NewRoom />
-        <SendMessage />
+        <SendMessage sendMessage={this.sendMessage} />
       </main>
     );
   }
