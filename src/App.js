@@ -7,11 +7,45 @@ import NewRoom from "./components/NewRoom";
 import SendMessage from "./components/SendMessage";
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: []
+    };
+  }
+  componentDidMount() {
+    const chatManager = new ChatManager({
+      instanceLocator: process.env.INSTANCE,
+      userId: "aaron",
+      tokenProvider: new TokenProvider({ url: process.env.TEST_TOKEN })
+    });
+
+    chatManager
+      .connect()
+      .then(currentUser => {
+        console.log("Successful Connection", currentUser);
+        currentUser.subscribeToRoom({
+          roomId: "19380169",
+          hooks: {
+            onMessage: message => {
+              this.setState({
+                messages: [...this.state.messages, message]
+              });
+            }
+          },
+          messageLimit: 20
+        });
+      })
+
+      .catch(err => {
+        console.log("Error on connection", err);
+      });
+  }
   render() {
     return (
       <main className="app">
         <RoomList />
-        <MessageList />
+        <MessageList messages={this.state.messages} />
         <NewRoom />
         <SendMessage />
       </main>
