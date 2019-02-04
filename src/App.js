@@ -10,9 +10,11 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: []
+      messages: [],
+      rooms: []
     };
   }
+
   componentDidMount() {
     const chatManager = new ChatManager({
       instanceLocator: process.env.INSTANCE,
@@ -24,6 +26,13 @@ class App extends React.Component {
       .connect()
       .then(currentUser => {
         console.log("Successful Connection", currentUser);
+
+        // populate current subscribed rooms
+        this.setState({
+          rooms: currentUser.rooms
+        });
+
+        // get messages
         currentUser.subscribeToRoom({
           roomId: "19380169",
           hooks: {
@@ -41,10 +50,11 @@ class App extends React.Component {
         console.log("Error on connection", err);
       });
   }
+
   render() {
     return (
       <main className="app">
-        <RoomList />
+        <RoomList rooms={this.state.rooms} />
         <MessageList messages={this.state.messages} />
         <NewRoom />
         <SendMessage />

@@ -46,11 +46,18 @@ body {
   grid-area: s;
 }
 
-.room-list {
+.rooms {
   height: 100%;
   padding: 10px;
   overflow: scroll;
   background-color: var(--blue);
+}
+
+.rooms .room-list {
+}
+
+.rooms .room-list .room-title {
+  font-size: 1.5rem;
 }
 
 .message-list {
