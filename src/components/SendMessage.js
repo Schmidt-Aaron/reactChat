@@ -2,7 +2,11 @@ import React from "react";
 
 class SendMessage extends React.Component {
   render() {
-    return <p>SendMessage</p>;
+    return (
+      <div className="send-message">
+        <p>SendMessage</p>
+      </div>
+    );
   }
 }
 

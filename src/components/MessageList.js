@@ -2,7 +2,11 @@ import React from "react";
 
 class MessageList extends React.Component {
   render() {
-    return <p>MessageList</p>;
+    return (
+      <div className="message-list">
+        <p>MessageList</p>
+      </div>
+    );
   }
 }
 
