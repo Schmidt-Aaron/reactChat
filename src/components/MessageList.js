@@ -13,18 +13,29 @@ class MessageList extends React.Component {
 
   // used to toggle auto scroll to bottom depending on where user is in messages
   UNSAFE_componentWillUpdate() {
-    this.shouldScrollToBottom =
-      this.messageDiv.scrollTop + this.messageDiv.clientHeight + 100 >=
-      this.messageDiv.scrollHeight;
+    if (this.props.roomId) {
+      this.shouldScrollToBottom =
+        this.messageDiv.scrollTop + this.messageDiv.clientHeight + 100 >=
+        this.messageDiv.scrollHeight;
+    }
   }
 
   componentDidUpdate() {
-    if (this.shouldScrollToBottom) {
-      this.scrollToBottom();
+    if (this.props.roomId) {
+      if (this.shouldScrollToBottom) {
+        this.scrollToBottom();
+      }
     }
   }
 
   render() {
+    if (!this.props.roomId) {
+      return (
+        <div className="message-list">
+          <div className="join-room">&larr; Join a room!</div>
+        </div>
+      );
+    }
     return (
       <div
         className="message-list"
